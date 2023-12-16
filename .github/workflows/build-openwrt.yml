@@ -78,6 +78,7 @@ jobs:
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH /mnt/workdir/openwrt
         ln -sf /mnt/workdir/openwrt openwrt
+        ls openwrt; ls /mnt/workdir/openwrt
 
     - name: Load custom feeds
       run: |
