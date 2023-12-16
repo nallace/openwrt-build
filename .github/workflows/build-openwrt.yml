@@ -76,16 +76,8 @@ jobs:
       working-directory: /mnt/workdir
       run: |
         df -hT $PWD
-        git clone $REPO_URL -b $REPO_BRANCH openwrt
-        ls -sh openwrt; ls -sh /mnt/workdir
-        pwd
-        #ln -sf openwrt /mnt/workdir/openwrt
-
-    - name: Cache
-      uses: nallace/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        prefix: /mnt/workdir/openwrt
+        git clone $REPO_URL -b $REPO_BRANCH /mnt/workdir/openwrt
+        ln -sf /mnt/workdir/openwrt openwrt
 
     - name: Load custom feeds
       run: |
@@ -130,6 +122,7 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
         #rm -rf feeds/packages/lang/golang/golang
         #svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang/golang feeds/packages/lang/golang/golang
+        ls -sh openwrt ; df -h ; pwd; ls -sh /mnt/workspace/openwrt
 
     - name: Compile the firmware
       id: compile
