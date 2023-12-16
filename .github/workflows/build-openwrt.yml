@@ -118,7 +118,7 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
         #rm -rf feeds/packages/lang/golang/golang
         #svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang/golang feeds/packages/lang/golang/golang
-        ls -sh openwrt ; df -h ; pwd; ls -sh /mnt/workspace/openwrt
+        ls -sh openwrt/ ; df -h ; pwd; ls -sh /mnt/workspace/openwrt/
 
     - name: Compile the firmware
       id: compile
