@@ -37,19 +37,19 @@ env:
 jobs:
   build:
     runs-on: ubuntu-20.04
+    defaults:
+      run:
+        shell: bash
+        working-directory: /mnt/workspace
 
     steps:
     - name: Checkout
       uses: actions/checkout@main
-      with:
-        ref: main
-        fetch-depth: 0
-
-    - name: cache
-      uses: nallace/cachewrtbuild@main
-      with:
-        ccache: 'true'
-    
+      
+#    - name: cache
+#      uses: nallace/cachewrtbuild@main
+#      with:
+#        ccache: 'true'
 
     - name: Initialization environment
       env:
@@ -57,6 +57,7 @@ jobs:
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         df -h
+        ls -al; pwd
         sudo -E apt update -y
         sudo -E apt full-upgrade -y
         sudo -E apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
@@ -69,19 +70,14 @@ jobs:
         sudo -E apt -qq autoremove --purge
         sudo -E apt -qq clean
         sudo timedatectl set-timezone "$TZ"
-        sudo mkdir -p /mnt/workdir
-        sudo chown $USER:$GROUPS /mnt/workdir
+        sudo mkdir -p /mnt/workspace
+        sudo chown $USER:$GROUPS /mnt/workspace
+        ls -al; pwd
 
     - name: Clone source code
-      working-directory: /mnt/workdir
       run: |
         df -hT $PWD
-        git clone $REPO_URL -b $REPO_BRANCH /mnt/workdir/openwrt
-        echo "1"
-        ls -al; pwd
-        ln -sf /mnt/workdir/openwrt openwrt
-        echo "2"
-        ls -al; pwd
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
 
     - name: Load custom feeds
       run: |
