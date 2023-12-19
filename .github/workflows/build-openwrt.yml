@@ -36,6 +36,10 @@ env:
 jobs:
   build:
     runs-on: ubuntu-20.04
+    
+    permissions:
+      contents: write
+      statuses: write
 
     steps:
     - name: Checkout
@@ -166,6 +170,7 @@ jobs:
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         files: ${{ env.FIRMWARE }}/*
+
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
