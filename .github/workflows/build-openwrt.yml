@@ -116,7 +116,6 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-        ls -sh openwrt/ ; df -h ; pwd; ls -sh /mnt/workspace/openwrt/
 
     - name: Compile the firmware
       id: compile
