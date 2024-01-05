@@ -45,11 +45,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@main
-      
-#    - name: cache
-#      uses: nallace/cachewrtbuild@main
-#      with:
-#        ccache: 'true'
 
     - name: Initialization environment
       env:
@@ -82,11 +77,12 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /mnt/workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
-#    - name: Cache
-#      uses: klever1988/cachewrtbuild@main
-#      with:
-#        ccache: 'true'
-#        prefix: ${{ github.workspace }}/openwrt
+    - name: Cache openwrt build
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        prefix: openwrt
+        mixkey: x86_64
 
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
